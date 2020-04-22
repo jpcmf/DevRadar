@@ -23,6 +23,7 @@ export default createGlobalStyle`
     /* background-color: ${colors.secondary}; */
     /* background: rgb(229,230,240); */
     background: linear-gradient(180deg, rgba(229,230,240,1) 0%, rgba(229,230,240,1) 50%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
   }
 
   body, input, button {

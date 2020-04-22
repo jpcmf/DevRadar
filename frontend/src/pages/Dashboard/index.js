@@ -20,7 +20,50 @@ export default function Dashboard() {
       </Sidebar>
 
       <Main>
-        <strong>Cadastrar</strong>
+        <ul>
+          <li>
+            <header>
+              <img
+                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
+                alt=""
+              />
+              <div className="user-info">
+                <strong>João</strong>
+                <span>ReactJS</span>
+              </div>
+            </header>
+            <p>Biografia...</p>
+            <a href="/">Go to the Github profile</a>
+          </li>
+          <li>
+            <header>
+              <img
+                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
+                alt=""
+              />
+              <div className="user-info">
+                <strong>João</strong>
+                <span>ReactJS</span>
+              </div>
+            </header>
+            <p>Biografia...</p>
+            <a href="/">Go to the Github profile</a>
+          </li>
+          <li>
+            <header>
+              <img
+                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
+                alt=""
+              />
+              <div className="user-info">
+                <strong>João</strong>
+                <span>ReactJS</span>
+              </div>
+            </header>
+            <p>Biografia...</p>
+            <a href="/">Go to the Github profile</a>
+          </li>
+        </ul>
       </Main>
     </Container>
   );
