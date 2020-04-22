@@ -1,17 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Container, Sidebar, Main } from './styles';
 
 import Form from '~/components/Form';
+import DevItem from '~/components/DevItem';
+
+import api from '~/services/api';
 
 export default function Dashboard() {
-  const handleSubmit = values => console.log(JSON.stringify(values));
-  const initialValues = {
+  const [loading, setLoading] = useState(false);
+  const [initialValues, setInitialValues] = useState({
     github_username: '',
     techs: '',
-    latitude: '',
-    longitude: '',
-  };
+    latitude: 0,
+    longitude: 0,
+  });
+  const [devs, setDevs] = useState([]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords;
+
+        setInitialValues({
+          ...initialValues,
+          latitude,
+          longitude,
+        });
+      },
+      err => {
+        console.log(err);
+      },
+      {
+        timeout: 30000,
+      }
+    );
+  }, []); // eslint-disable-line
+
+  async function handleSubmit(values, { resetForm }) {
+    const { github_username, techs, latitude, longitude } = values;
+
+    const response = await api.post('/devs', {
+      github_username,
+      techs,
+      latitude,
+      longitude,
+    });
+
+    resetForm();
+    setDevs([...devs, response.data]);
+  }
+
+  useEffect(() => {
+    async function loadDevs() {
+      try {
+        setLoading(true);
+
+        const response = await api.get('/devs');
+
+        setDevs(response.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDevs();
+  }, []);
 
   return (
     <Container>
@@ -21,48 +77,11 @@ export default function Dashboard() {
 
       <Main>
         <ul>
-          <li>
-            <header>
-              <img
-                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
-                alt=""
-              />
-              <div className="user-info">
-                <strong>João</strong>
-                <span>ReactJS</span>
-              </div>
-            </header>
-            <p>Biografia...</p>
-            <a href="/">Go to the Github profile</a>
-          </li>
-          <li>
-            <header>
-              <img
-                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
-                alt=""
-              />
-              <div className="user-info">
-                <strong>João</strong>
-                <span>ReactJS</span>
-              </div>
-            </header>
-            <p>Biografia...</p>
-            <a href="/">Go to the Github profile</a>
-          </li>
-          <li>
-            <header>
-              <img
-                src="https://avatars1.githubusercontent.com/u/1216136?s=460&u=6cd0d881545456467074bdd24e3032566f8a36c2&v=4"
-                alt=""
-              />
-              <div className="user-info">
-                <strong>João</strong>
-                <span>ReactJS</span>
-              </div>
-            </header>
-            <p>Biografia...</p>
-            <a href="/">Go to the Github profile</a>
-          </li>
+          {loading && devs ? (
+            <p>Loading...</p>
+          ) : (
+            devs.map(dev => <DevItem key={dev._id} dev={dev} />)
+          )}
         </ul>
       </Main>
     </Container>

@@ -91,6 +91,7 @@ export const Main = styled.main`
     }
 
     li {
+      animation: 300ms ease-out 0s 1 slideInFromLeft;
       background-color: ${colors.white};
       border-radius: 2px;
       box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
