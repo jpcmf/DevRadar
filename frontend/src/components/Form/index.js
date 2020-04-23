@@ -2,8 +2,6 @@ import React from 'react';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-// import { FormWrapper } from './styles';
-
 const validations = Yup.object().shape({
   github_username: Yup.string().required(),
   techs: Yup.string().required(),

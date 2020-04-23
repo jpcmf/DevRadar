@@ -48,6 +48,7 @@ export default function Dashboard() {
     });
 
     resetForm();
+
     setDevs([...devs, response.data]);
   }
 
