@@ -6,11 +6,25 @@ import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from 'expo-location';
+import { MaterialIcons } from '@expo/vector-icons';
 
-import { Avatar, Tooltip, DevName, DevBio, DevTechs } from './styles';
+import {
+  Avatar,
+  Tooltip,
+  DevName,
+  DevBio,
+  DevTechs,
+  SearchForm,
+  Input,
+  Button,
+} from './styles';
+
+import api from '../../services/api';
 
 function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [devs, setDevs] = useState([]);
+  const [techs, setTechs] = useState('');
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -35,34 +49,82 @@ function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  async function loadDevs() {
+    const { latitude, longitude } = currentRegion;
+
+    const response = await api.get('/search', {
+      params: {
+        latitude,
+        longitude,
+        techs,
+      },
+    });
+
+    setDevs(response.data.devs);
+  }
+
+  function handleRegionChange(region) {
+    setCurrentRegion(region);
+  }
+
   if (!currentRegion) {
     return null;
   }
 
   return (
-    <MapView initialRegion={currentRegion} style={styles.map}>
-      <Marker coordinate={{ latitude: -25.464894, longitude: -49.2861416 }}>
-        <Avatar
-          source={{
-            uri: 'https://avatars0.githubusercontent.com/u/1216136?v=4',
-          }}
+    <>
+      <MapView
+        onRegionChange={handleRegionChange}
+        initialRegion={currentRegion}
+        style={styles.map}
+      >
+        {devs &&
+          devs.map((dev) => (
+            <Marker
+              key={dev._id}
+              coordinate={{
+                latitude: dev.location.coordinates[1],
+                longitude: dev.location.coordinates[0],
+              }}
+            >
+              <Avatar
+                source={{
+                  uri: dev.avatar_url,
+                }}
+              />
+
+              <Callout
+                onPress={() => {
+                  navigation.navigate('Profile', {
+                    github_username: dev.github_username,
+                  });
+                }}
+              >
+                <Tooltip>
+                  <DevName>{dev.name}</DevName>
+                  <DevBio>{dev.bio}</DevBio>
+                  <DevTechs>{dev.techs.join(', ')}</DevTechs>
+                </Tooltip>
+              </Callout>
+            </Marker>
+          ))}
+      </MapView>
+
+      <SearchForm>
+        <Input
+          placeholder="Search developers by techs..."
+          placeholderTextColor="#999"
+          autoCapitalize="words"
+          autoCorrect={false}
+          value={techs}
+          onChangeText={setTechs}
         />
 
-        <Callout
-          onPress={() => {
-            navigation.navigate('Profile', {
-              github_username: 'jpcmf',
-            });
-          }}
-        >
-          <Tooltip>
-            <DevName>Joao Paulo Fricks</DevName>
-            <DevBio>Bio...</DevBio>
-            <DevTechs>ReactJS, React Native</DevTechs>
-          </Tooltip>
-        </Callout>
-      </Marker>
-    </MapView>
+        <Button onPress={loadDevs}>
+          <MaterialIcons name="my-location" size={18} color="#fff" />
+        </Button>
+      </SearchForm>
+    </>
   );
 }
 
