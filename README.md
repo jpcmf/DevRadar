@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align="center">
-  🚀 Semana OmniStack 10.0
+  In this repository, you'll find a complete application code developed during OmniStack Week 10.0, which includes a Back end, Front end and Mobile. 🚀 
 </h4>
 
 <p align="center">
@@ -24,8 +24,8 @@
 
 <p align="center">
   <a href="#fire-techs">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#desktop_computer-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#octopus-to-do">To-Do</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
@@ -39,3 +39,20 @@ The project was built with the following technologies:
 - [React](https://reactjs.org)
 - [React Native](https://facebook.github.io/react-native/)
 - [Expo](https://expo.io/)
+
+## :desktop_computer: Project
+
+`DevRadar` is a project that aims to connect developers close to you who work with the same technologies.
+
+## :octopus: To-Do
+
+- Improvements of UI
+- Improvements of UX
+
+## :memo: License
+
+This project is under the MIT license. See the [LICENSE](LICENSE.md) for more details.
+
+---
+
+Built with ♥ by João Paulo Fricks :wave: [Follow me on Twitter](https://twitter.com/jpcmf80)
